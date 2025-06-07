@@ -10,7 +10,7 @@ class PMTreeNode {
     char value;
     std::vector<std::shared_ptr<PMTreeNode>> children;
 
-    PMTreeNode(char val) : value(val) {}
+    explicit PMTreeNode(char val) : value(val) {}
 };
 
 class PMTree {
@@ -18,10 +18,11 @@ class PMTree {
     std::shared_ptr<PMTreeNode> root;
     std::vector<char> symbols;
 
-    void buildPermutationTree(const std::vector<char>& remaining, std::shared_ptr<PMTreeNode> node);
+    void buildPermutationTree(const std::vector<char>& remaining,
+                               std::shared_ptr<PMTreeNode> node);
 
  public:
-    PMTree(const std::vector<char>& symbols);
+    explicit PMTree(const std::vector<char>& symbols);
     std::shared_ptr<PMTreeNode> getRoot() const { return root; }
     const std::vector<char>& getSymbols() const { return symbols; }
 
