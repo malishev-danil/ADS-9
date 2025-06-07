@@ -1,12 +1,14 @@
 // Copyright 2022 NNTU-CS
-#include  <iostream>
+#include <iostream>
 #include <vector>
 #include <algorithm>
 #include <stdexcept>
 #include <cmath>
+#include <memory>  // Добавлено для make_shared
 #include "tree.h"
 
-void PMTree::buildPermutationTree(const std::vector<char>& remaining, std::shared_ptr<PMTreeNode> node) {
+void PMTree::buildPermutationTree(const std::vector<char>& remaining,
+                                  std::shared_ptr<PMTreeNode> node) {
     if (remaining.empty()) return;
 
     for (size_t i = 0; i < remaining.size(); ++i) {
@@ -23,8 +25,9 @@ PMTree::PMTree(const std::vector<char>& symbols) : symbols(symbols) {
     buildPermutationTree(symbols, root);
 }
 
-void collectAllPermutations(std::shared_ptr<PMTreeNode> node, std::vector<char>& path,
-                            std::vector<std::vector<char>>& result) {
+void collectAllPermutations(std::shared_ptr<PMTreeNode> node,
+                           std::vector<char>& path,
+                           std::vector<std::vector<char>>& result) {
     path.push_back(node->value);
 
     if (node->children.empty()) {
@@ -49,7 +52,10 @@ std::vector<std::vector<char>> getAllPerms(PMTree& tree) {
 
 int counter = 0;
 
-bool dfsGetNthPerm1(std::shared_ptr<PMTreeNode> node, std::vector<char>& path, std::vector<char>& result, int target) {
+bool dfsGetNthPerm1(std::shared_ptr<PMTreeNode> node,
+                   std::vector<char>& path,
+                   std::vector<char>& result,
+                   int target) {
     path.push_back(node->value);
 
     if (node->children.empty()) {
@@ -72,7 +78,8 @@ bool dfsGetNthPerm1(std::shared_ptr<PMTreeNode> node, std::vector<char>& path, s
 }
 
 std::vector<char> getPerm1(PMTree& tree, int num) {
-    if (num <= 0) throw std::invalid_argument("Number must be positive");
+    if (num <= 0)
+        throw std::invalid_argument("Number must be positive");
 
     std::vector<char> result;
     std::vector<char> path;
@@ -94,14 +101,15 @@ int factorial(int n) {
 }
 
 std::vector<char> getPerm2(PMTree& tree, int num) {
-    if (num <= 0) throw std::invalid_argument("Number must be positive");
+    if (num <= 0)
+        throw std::invalid_argument("Number must be positive");
 
     int n = tree.symbols.size();
     std::vector<char> symbols = tree.symbols;
     std::sort(symbols.begin(), symbols.end());
 
     std::vector<char> result;
-    int index = num - 1; // индекс начинается с 0
+    int index = num - 1;  // индекс начинается с 0
 
     for (int i = 0; i < n; ++i) {
         int fact = factorial(n - i - 1);
