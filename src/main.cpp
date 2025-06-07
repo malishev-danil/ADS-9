@@ -1,6 +1,8 @@
 // Copyright 2022 NNTU-CS
+
 #include "tree.h"
-#include "tree.h"
+
+#include <vector>
 #include <iostream>
 #include <chrono>
 
@@ -11,21 +13,27 @@ int main() {
     std::vector<std::vector<char>> perms = getAllPerms(tree);
     std::cout << "All permutations:\n";
     for (const auto& p : perms) {
-        for (char c : p) std::cout << c;
+        for (char c : p) {
+            std::cout << c;
+        }
         std::cout << "\n";
     }
 
     std::cout << "\nTesting getPerm1:\n";
     for (int i = 1; i <= perms.size(); ++i) {
         std::vector<char> p = getPerm1(tree, i);
-        for (char c : p) std::cout << c;
+        for (char c : p) {
+            std::cout << c;
+        }
         std::cout << "\n";
     }
 
     std::cout << "\nTesting getPerm2:\n";
     for (int i = 1; i <= perms.size(); ++i) {
         std::vector<char> p = getPerm2(tree, i);
-        for (char c : p) std::cout << c;
+        for (char c : p) {
+            std::cout << c;
+        }
         std::cout << "\n";
     }
 
