@@ -20,7 +20,7 @@ int main() {
     }
 
     std::cout << "\nTesting getPerm1:\n";
-    for (int i = 1; i <= perms.size(); ++i) {
+    for (int i = 1; i <= static_cast<int>(perms.size()); ++i) {
         std::vector<char> p = getPerm1(tree, i);
         for (char c : p) {
             std::cout << c;
@@ -29,7 +29,7 @@ int main() {
     }
 
     std::cout << "\nTesting getPerm2:\n";
-    for (int i = 1; i <= perms.size(); ++i) {
+    for (int i = 1; i <= static_cast<int>(perms.size()); ++i) {
         std::vector<char> p = getPerm2(tree, i);
         for (char c : p) {
             std::cout << c;
@@ -45,14 +45,18 @@ int main() {
     getPerm1(bigTree, 20000);
     auto end = std::chrono::high_resolution_clock::now();
     std::cout << "getPerm1 time: "
-              << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()
+              << std::chrono::duration_cast<std::chrono::milliseconds>(
+                     end - start)
+                     .count()
               << " ms\n";
 
     start = std::chrono::high_resolution_clock::now();
     getPerm2(bigTree, 20000);
     end = std::chrono::high_resolution_clock::now();
     std::cout << "getPerm2 time: "
-              << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()
+              << std::chrono::duration_cast<std::chrono::milliseconds>(
+                     end - start)
+                     .count()
               << " ms\n";
 
     return 0;
