@@ -1,15 +1,10 @@
 // Copyright 2022 NNTU-CS
 #include  <iostream>
-#include  <fstream>
-#include  <locale>
-#include  <cstdlib>
-#include  "tree.h"
-
-#include "tree.h"
 #include <vector>
 #include <algorithm>
 #include <stdexcept>
 #include <cmath>
+#include "tree.h"
 
 void PMTree::buildPermutationTree(const std::vector<char>& remaining, std::shared_ptr<PMTreeNode> node) {
     if (remaining.empty()) return;
@@ -24,17 +19,16 @@ void PMTree::buildPermutationTree(const std::vector<char>& remaining, std::share
 }
 
 PMTree::PMTree(const std::vector<char>& symbols) : symbols(symbols) {
-    root = std::make_shared<PMTreeNode>('*'); // корень — фиктивный узел
+    root = std::make_shared<PMTreeNode>('*');
     buildPermutationTree(symbols, root);
 }
 
-// Функция для сбора всех перестановок
 void collectAllPermutations(std::shared_ptr<PMTreeNode> node, std::vector<char>& path,
                             std::vector<std::vector<char>>& result) {
     path.push_back(node->value);
 
     if (node->children.empty()) {
-        result.push_back(path); // достигли листа — это перестановка
+        result.push_back(path);
     } else {
         for (auto& child : node->children) {
             collectAllPermutations(child, path, result);
