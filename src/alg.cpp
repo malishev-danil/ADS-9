@@ -21,6 +21,7 @@ void PMTree::buildPermutationTree(const std::vector<char>& remaining,
 }
 
 PMTree::PMTree(const std::vector<char>& symbols) : symbols(symbols) {
+    if (symbols.empty()) return;
     root = std::make_shared<PMTreeNode>('*');
     buildPermutationTree(symbols, root);
 }
@@ -43,8 +44,13 @@ void collectAllPermutations(std::shared_ptr<PMTreeNode> node,
 
 std::vector<std::vector<char>> getAllPerms(PMTree& tree) {
     std::vector<std::vector<char>> result;
+
+    if (tree.getSymbols().empty()) {
+        return result;
+    }
+
     std::vector<char> path;
-    for (auto& child : tree.root->children) {
+    for (auto& child : tree.getRoot()->children) {
         collectAllPermutations(child, path, result);
     }
     return result;
