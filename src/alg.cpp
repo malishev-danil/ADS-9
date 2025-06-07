@@ -43,9 +43,15 @@ void collectAllPermutations(std::shared_ptr<PMTreeNode> node,
 }
 
 std::vector<std::vector<char>> getAllPerms(PMTree& tree) {
-    std::vector<std::vector<char>> result;
+    const auto& symbols = tree.getSymbols();
+    std::cout << "Symbols size: " << symbols.size() << std::endl;
+    for (char c : symbols) {
+        std::cout << c << " ";
+    }
+    std::cout << std::endl;
 
-    if (tree.getSymbols().empty()) {
+    std::vector<std::vector<char>> result;
+    if (symbols.empty()) {
         return result;
     }
 
