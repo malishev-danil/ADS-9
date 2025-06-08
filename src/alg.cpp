@@ -21,37 +21,40 @@ void PMTree::buildPermutationTree(const std::vector<char>& remaining,
 }
 
 PMTree::PMTree(const std::vector<char>& symbols) : symbols(symbols) {
-    if (symbols.empty()) return;
     root = std::make_shared<PMTreeNode>('*');
-    buildPermutationTree(symbols, root);
+    if (!symbols.empty()) {
+        buildPermutationTree(symbols, root);
+    }
 }
 
 void collectAllPermutations(std::shared_ptr<PMTreeNode> node,
                            std::vector<char>& path,
                            std::vector<std::vector<char>>& result) {
-    path.push_back(node->value);
+    if (node->value != '*') {  // Skip the root's '*' value
+        path.push_back(node->value);
+    }
 
     if (node->children.empty()) {
-        result.push_back(path);
+        if (!path.empty()) {  // Only add if path is not empty
+            result.push_back(path);
+        }
     } else {
         for (auto& child : node->children) {
             collectAllPermutations(child, path, result);
         }
     }
 
-    path.pop_back();
+    if (node->value != '*') {
+        path.pop_back();
+    }
 }
 
 std::vector<std::vector<char>> getAllPerms(PMTree& tree) {
     const auto& symbols = tree.getSymbols();
-    std::cout << "Symbols size: " << symbols.size() << std::endl;
-    for (char c : symbols) {
-        std::cout << c << " ";
-    }
-    std::cout << std::endl;
-
     std::vector<std::vector<char>> result;
-    if (symbols.empty()) {
+    
+    // Return empty if no symbols or if root has no children
+    if (symbols.empty() || tree.getRoot()->children.empty()) {
         return result;
     }
 
