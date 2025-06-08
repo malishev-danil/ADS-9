@@ -108,7 +108,9 @@ std::vector<char> getPerm1(PMTree& tree, int num) {
 }
 
 int factorial(int n) {
-    if (n < 0) throw std::invalid_argument("Factorial of negative number is undefined");
+    if (n < 0)
+        throw std::invalid_argument(
+            "Factorial of negative number is undefined");
     int res = 1;
     for (int i = 2; i <= n; ++i)
         res *= i;
@@ -117,13 +119,13 @@ int factorial(int n) {
 
 std::vector<char> getPerm2(PMTree& tree, int num) {
     if (num <= 0)
-        throw std::invalid_argument("Number must be positive");
+        return {};
 
     int n = tree.symbols.size();
     int total_perms = factorial(n);
 
     if (num > total_perms)
-        throw std::out_of_range("Permutation number out of range");
+        return {};
 
     std::vector<char> symbols = tree.symbols;
     std::sort(symbols.begin(), symbols.end());
