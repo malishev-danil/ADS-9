@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <stdexcept>
 #include <cmath>
-#include <memory>  // Добавлено для make_shared
+#include <memory>
 #include "tree.h"
 
 void PMTree::buildPermutationTree(const std::vector<char>& remaining,
@@ -30,7 +30,7 @@ PMTree::PMTree(const std::vector<char>& symbols) : symbols(symbols) {
 void collectAllPermutations(std::shared_ptr<PMTreeNode> node,
                            std::vector<char>& path,
                            std::vector<std::vector<char>>& result) {
-    if (node->value != '*') {  // Skip the root's '*' value
+    if (node->value != '*') {
         path.push_back(node->value);
     }
 
@@ -52,8 +52,6 @@ void collectAllPermutations(std::shared_ptr<PMTreeNode> node,
 std::vector<std::vector<char>> getAllPerms(PMTree& tree) {
     const auto& symbols = tree.getSymbols();
     std::vector<std::vector<char>> result;
-    
-    // Return empty if no symbols or if root has no children
     if (symbols.empty() || tree.getRoot()->children.empty()) {
         return result;
     }
@@ -110,8 +108,10 @@ std::vector<char> getPerm1(PMTree& tree, int num) {
 }
 
 int factorial(int n) {
+    if (n < 0) throw std::invalid_argument("Factorial of negative number is undefined");
     int res = 1;
-    for (int i = 1; i <= n; ++i) res *= i;
+    for (int i = 2; i <= n; ++i)
+        res *= i;
     return res;
 }
 
@@ -129,7 +129,7 @@ std::vector<char> getPerm2(PMTree& tree, int num) {
     std::sort(symbols.begin(), symbols.end());
 
     std::vector<char> result;
-    int index = num - 1;  // индекс начинается с 0
+    int index = num - 1;
 
     for (int i = 0; i < n; ++i) {
         int fact = factorial(n - i - 1);
