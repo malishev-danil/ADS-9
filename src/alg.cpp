@@ -120,6 +120,11 @@ std::vector<char> getPerm2(PMTree& tree, int num) {
         throw std::invalid_argument("Number must be positive");
 
     int n = tree.symbols.size();
+    int total_perms = factorial(n);
+
+    if (num > total_perms)
+        throw std::out_of_range("Permutation number out of range");
+
     std::vector<char> symbols = tree.symbols;
     std::sort(symbols.begin(), symbols.end());
 
